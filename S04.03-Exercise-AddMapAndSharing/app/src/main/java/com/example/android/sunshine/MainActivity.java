@@ -23,7 +23,6 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -219,9 +218,24 @@ public class MainActivity extends AppCompatActivity implements ForecastAdapterOn
             mForecastAdapter.setWeatherData(null);
             loadWeatherData();
             return true;
-        }
+        } else if (id == R.id.action_map) {
+            String address = "1600 Amphitheatre Parkway, CA";
 
-        // TODO (2) Launch the map when the map menu item is clicked
+            Uri.Builder builder = new Uri.Builder();
+            builder.scheme("geo")
+                    .encodedPath("0,0")
+                    .appendQueryParameter("q",address);
+            Uri uri = builder.build();
+
+            Intent intent = new Intent(Intent.ACTION_VIEW);
+
+            intent.setData(uri);
+
+            if (intent.resolveActivity(getPackageManager()) != null) {
+                startActivity(intent);
+            }
+            return true;
+        }
 
         return super.onOptionsItemSelected(item);
     }
