@@ -111,9 +111,10 @@ public class WeatherProvider extends ContentProvider {
                         null, null, sortOrder);
                 break;
             case CODE_WEATHER_WITH_DATE:
-                String id = uri.getPathSegments().get(1);
+                String date = uri.getLastPathSegment();
 
-                returnedCursor = db.query(TABLE_NAME, projection, _ID + "=?", new String[]{id},
+                returnedCursor = db.query(TABLE_NAME, projection,
+                        WeatherContract.WeatherEntry.COLUMN_DATE + "=?", new String[]{date},
                         null, null, sortOrder);
                 break;
             default:
